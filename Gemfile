@@ -50,3 +50,5 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
   gem "rspec-rails"
 end
+
+gem "fiddle", "~> 1.1"
