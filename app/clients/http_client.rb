@@ -1,6 +1,6 @@
 
 class HttpClient
-  def initialize(base_url:, timeout: 5, open_timeout: 2)
+  def initialize(base_url:, timeout: 10, open_timeout: 2)
     @conn = Faraday.new(url: base_url) do |f|
       f.request :json
       f.response :json, parser_options: { symbolize_names: true }
@@ -20,7 +20,9 @@ class HttpClient
   private
 
   def request
+    start_time = Time.now
     response = yield
+    Rails.logger.info("Request took #{(Time.now - start_time)}s with status #{response.status}")
 
     {
       success: response.success?,
